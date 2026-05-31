@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Carter Blaine</title>
+<meta name="description" content="Building experiences that connect people with products"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+
+/* ========== RESET ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { width: 0; height: 0; }
+* { -ms-overflow-style: none; scrollbar-width: none; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #fff;
+  color: #181818;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ========== PROGRESS ========== */
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(24,24,24,0.08);
+  z-index: 9999;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #181818;
+  transition: width 0.1s linear;
+}
+
+/* ========== SPLIT LAYOUT ========== */
+/* Left panel fixed, right panel scrolls */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* ========== LEFT NAV ========== */
+.nav {
+  width: 240px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 28px 32px;
+  background: #fff;
+}
+
+/* Profile */
+.nav-profile {
+  display: block;
+  margin-bottom: 36px;
+  text-decoration: none;
+  color: inherit;
+}
+.nav-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.nav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.nav-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: #181818;
+  line-height: 1.3;
+}
+
+/* Index links */
+.nav-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nav-link-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+.nav-link-row a {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(24,24,24,0.35);
+  text-decoration: none;
+  transition: color 0.18s;
+  white-space: nowrap;
+  line-height: 1;
+}
+.nav-link-row a:hover,
+.nav-link-row a.is-active { color: #181818; }
+
+.nav-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(24,24,24,0.1);
+}
+
+/* Bottom email */
+.nav-email {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(24,24,24,0.4);
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.nav-email:hover { color: #181818; }
+.nav-email svg { flex-shrink: 0; }
+
+/* ========== RIGHT CONTENT ========== */
+.content {
+  margin-left: 240px;
+  flex: 1;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+/* ========== SECTION WRAPPER ========== */
+/* Each section has 15vh top + 15vh bottom padding = ~30vh total gap between sections */
+.section {
+  padding: 15vh 64px 15vh;
+}
+
+/* ========== HERO ========== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 64px;
+}
+.hero-inner { max-width: 680px; }
+
+.hero h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #181818;
+  margin-bottom: 24px;
+}
+
+.hero-sub {
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: rgba(24,24,24,0.5);
+  line-height: 1.7;
+}
+.hero-sub a {
+  color: #181818;
+  border-bottom: 1px solid rgba(24,24,24,0.22);
+  padding-bottom: 1px;
+  transition: border-color 0.18s;
+}
+.hero-sub a:hover { border-color: #181818; }
+
+/* ========== CASE STUDIES ========== */
+.section-label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(24,24,24,0.28);
+  margin-bottom: 48px;
+}
+
+.cases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 52px 36px;
+}
+
+/* CASE BOX */
+.case {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--d, 0ms);
+}
+.case.show { opacity: 1; transform: none; }
+
+/* VIDEO */
+.case-vid {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #111;
+  margin-bottom: 13px;
+}
+.case-vid video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* CASE TITLE ROW */
+.case-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.case-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #181818;
+}
+.case-tag {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: rgba(24,24,24,0.35);
+  white-space: nowrap;
+}
+
+/* ACCORDION */
+.acc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  cursor: pointer;
+  user-select: none;
+  border-top: 1px solid rgba(24,24,24,0.07);
+}
+.acc-btn:last-of-type { border-bottom: 1px solid rgba(24,24,24,0.07); }
+.acc-btn-label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #181818;
+}
+.acc-icon {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid rgba(24,24,24,0.3);
+  border-bottom: 1.5px solid rgba(24,24,24,0.3);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.22s ease;
+  flex-shrink: 0;
+}
+.acc-item.is-open .acc-icon {
+  transform: rotate(-135deg) translateY(2px);
+  border-color: #181818;
+}
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.32s ease;
+}
+.acc-item.is-open .acc-body { max-height: 600px; }
+.acc-inner { padding: 8px 0 12px; }
+.acc-text {
+  font-size: 0.75rem;
+  line-height: 1.74;
+  color: rgba(24,24,24,0.58);
+}
+
+/* SKILLS */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.skill-tag {
+  background: rgba(24,24,24,0.05);
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #181818;
+}
+
+/* ========== ABOUT ========== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 64px;
+  align-items: start;
+}
+.about-heading {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  line-height: 1.18;
+  margin-bottom: 28px;
+}
+.about-body {
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: rgba(24,24,24,0.58);
+}
+.about-img {
+  width: 100%;
+  border-radius: 3px;
+  display: block;
+}
+
+/* ========== ARTICLES ========== */
+.articles-grid {
+  display: grid;
+  grid-template-columns: 176px 1fr;
+  gap: 0 40px;
+  align-items: start;
+}
+
+.art-sidebar {
+  position: sticky;
+  top: 0;
+}
+.art-group-title {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #181818;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+.art-sublink {
+  display: block;
+  font-size: 0.6rem;
+  color: rgba(24,24,24,0.38);
+  padding: 2px 0;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color 0.18s;
+  cursor: pointer;
+}
+.art-sublink:hover,
+.art-sublink.is-active { color: #181818; }
+.art-sep {
+  height: 1px;
+  background: rgba(24,24,24,0.08);
+  margin: 11px 0;
+}
+
+/* Article scroll area */
+.art-scroll {
+  overflow-y: auto;
+  max-height: 68vh;
+}
+.art-block { margin-bottom: 36px; }
+.art-h1 {
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  line-height: 1.28;
+  margin-bottom: 16px;
+  color: #181818;
+}
+.art-h2 {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  margin-top: 20px;
+  color: #181818;
+}
+.art-p {
+  font-size: 0.8rem;
+  line-height: 1.85;
+  color: rgba(24,24,24,0.6);
+  margin-bottom: 8px;
+}
+.art-p a { color: #181818; text-decoration: underline; text-underline-offset: 2px; }
+.art-rule { height: 1px; background: rgba(24,24,24,0.07); margin: 40px 0; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1100px) {
+  .cases { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-photo { display: none; }
+}
+
+@media (max-width: 768px) {
+  body { overflow: auto; height: auto; }
+  .layout { flex-direction: column; height: auto; }
+  .nav {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 24px;
+    gap: 16px;
+  }
+  .nav-profile { margin-bottom: 0; display: flex; align-items: center; gap: 12px; }
+  .nav-avatar { margin-bottom: 0; }
+  .nav-links, .nav-email { display: none; }
+  .content { margin-left: 0; height: auto; overflow-y: visible; }
+  .hero { padding: 0 24px; min-height: 80vh; }
+  .section { padding: 10vh 24px; }
+  .cases { grid-template-columns: 1fr; gap: 36px; }
+  .articles-grid { grid-template-columns: 1fr; }
+  .art-sidebar { display: none; }
+  .art-scroll { max-height: none; overflow: visible; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="pBar"></div></div>
+
+<div class="layout">
+
+  <!-- ====== LEFT NAV ====== -->
+  <nav class="nav">
+    <a href="#intro" class="nav-profile">
+      <div class="nav-avatar">
+        <img src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631/699143d66648df9ecd7e694b_backgroundlessheadshot.webp" alt="Carter Blaine"/>
+      </div>
+      <div class="nav-name">Carter blaine</div>
+    </a>
+
+    <div class="nav-links">
+      <div class="nav-link-row">
+        <a href="#intro" data-sec="intro" class="is-active">Intro</a>
+        <span class="nav-line"></span>
+      </div>
+      <div class="nav-link-row">
+        <a href="#casestudies" data-sec="casestudies">Case Studies</a>
+        <span class="nav-line"></span>
+      </div>
+      <div class="nav-link-row">
+        <a href="#about" data-sec="about">About</a>
+        <span class="nav-line"></span>
+      </div>
+      <div class="nav-link-row">
+        <a href="#articles" data-sec="articles">Articles</a>
+        <span class="nav-line"></span>
+      </div>
+      <div class="nav-link-row">
+        <a href="mailto:Carterblaine@icloud.com">Connect</a>
+        <span class="nav-line"></span>
+      </div>
+    </div>
+
+    <a href="mailto:Carterblaine@icloud.com?subject=Hey%20Carter%2C%20writing%20from%20your%20site" class="nav-email">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Email
+    </a>
+  </nav>
+
+  <!-- ====== RIGHT CONTENT ====== -->
+  <div class="content" id="content">
+
+    <!-- HERO -->
+    <section id="intro" class="hero">
+      <div class="hero-inner">
+        <h1>Designing experiences<br/>curated to convert, scale, and retain</h1>
+        <p class="hero-sub">
+          See <a href="#casestudies">what people say about me</a>,
+          <a href="#about">get to know me</a>, or
+          <a href="mailto:Carterblaine@icloud.com?subject=Hey%20Carter%20">work with me</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="casestudies" class="section">
+      <span class="section-label">Case Studies</span>
+      <div class="cases" id="casesGrid">
+
+        <!-- 1. Gamer Advantage -->
+        <div class="case">
+          <a href="https://gameradvantage.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F694c60d26bc3e789df383b22_gamersr%20-%201080WebShareName_poster.0000000.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F694c60d26bc3e789df383b22_gamersr%20-%201080WebShareName_mp4.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Gamer Advantage</span><span class="case-tag">Safe gaming glasses</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Gamer Advantage is a technology fused, first of its kind gaming glasses brand. Protecting against blue light, yellow light, and high energy visible light. Their glasses are customizable for any style of gamer, made to last, with long-game play kept in mind.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter was placed by an agency we hired, and the work couldn't be better. He went above and beyond what we expected. He redesigned our Shopify Plus store and for the first time, I've experienced someone who truly knew the platform.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">SEO system increased product visibility by ~80%. Reworked homepage layout and redesigned product page — visitors up 15%, conversion rate from 1% to 2.1%.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Shopify Plus</span><span class="skill-tag">Product Management</span><span class="skill-tag">Graphic Design</span><span class="skill-tag">UX</span><span class="skill-tag">SEO</span><span class="skill-tag">Figma</span><span class="skill-tag">Liquid</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 2. Stims -->
+        <div class="case">
+          <a href="https://stimsgum.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F694c13539d6824e9526b741e_stims%20-%201080WebShareName_poster.0000000.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F694c13539d6824e9526b741e_stims%20-%201080WebShareName_mp4.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Stims</span><span class="case-tag">Clean energy gum</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Stims is an organic energy chewing gum designed to deliver clean, convenient focus without the crash. Made with thoughtfully sourced ingredients, a smarter alternative to traditional energy products.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Collaborating with Carter on our e-commerce store was great, end to end. From setting up the Shopify store, UI and UX, development, product packaging design, SEO, to Google Business page setup and launch readiness. The result was a captivating storefront we could confidently launch from.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Full 0-to-1 build. Pivoted from teeth-strengthening to clean energy gum. Steadily selling and shipping within the US with growth tracking expected market fit.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Shopify Plus</span><span class="skill-tag">Product Development</span><span class="skill-tag">Retention Optimization</span><span class="skill-tag">Packaging Design</span><span class="skill-tag">Copywriting</span><span class="skill-tag">GA4</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 3. Hal&Al -->
+        <div class="case">
+          <a href="https://halandalmeats.com/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F677f2762296d4b6435866c1d_halandal-transcode-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F677f2762296d4b6435866c1d_halandal-transcode-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Hal&amp;Al Meats</span><span class="case-tag">Halal meat delivered in NYC</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Operating out of two state-of-the-art facilities, Hal&Al Meats specializes in premium, ethically sourced cuts catering to a variety of chefs, tastes, and cuisines. Known for their dedication to quality, they hand-select and deliver each product to perfection.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter really helped me in a time of need — my business was getting overwhelmed with orders that had no lifetime customer value. When he took a step back, revisioned, realigned, and rebuilt, he did it really well. Much quicker than I imagined too.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Setup took two weeks — first ever product sell out online. Search engine traffic doubled via SEO. Subscription launched from 0 to the mid-200s.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Subscription Development</span><span class="skill-tag">CRO</span><span class="skill-tag">Copywriting</span><span class="skill-tag">GA4</span><span class="skill-tag">Shopify</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 4. Cactus -->
+        <div class="case">
+          <a href="https://trycactus.com/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F672fa645ab1bd3c65a47507a_CactusAIvideo-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F672fa645ab1bd3c65a47507a_CactusAIvideo-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Cactus</span><span class="case-tag">Cut underwriting time by 92%</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Cactus is a one-of-a-kind application for real estate investors. People can search properties, estimate cash flows, and check out what's around locally.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">At first, he was amazing. The first round of feedback really exceeded our expectations. From there, he got back in gear and did a really solid job.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Before this site released, they had 14 users after months public. After the relaunch — over 190 new users enrolled in premium.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Copywriting</span><span class="skill-tag">UX</span><span class="skill-tag">Subscription Development</span><span class="skill-tag">Product Development</span><span class="skill-tag">Webflow</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 5. FlyBasis -->
+        <div class="case">
+          <a href="https://www.flybasis.com/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F68095795a56f8e4f03e40bb4_flybasis%20-%20SD%20480p-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F68095795a56f8e4f03e40bb4_flybasis%20-%20SD%20480p-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">FlyBasis</span><span class="case-tag">Unlock exceptional travel value</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Flybasis is changing the way people find flights — built with simplicity and speed in mind, helping travelers uncover and book the best possible flights across the web.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">There's something truly amazing about Carter that's hard to describe. The way he perceives things — when he doesn't know something he finds it out. He responds typically within 1 hour or same day, and he's just a genuine person. Legitimately one of the best people I've come across.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">0-to-1, V1 project. Around 500 members enrolled within the first week back in 2022, with steady growth since.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Figma</span><span class="skill-tag">Webflow</span><span class="skill-tag">Graphic Design</span><span class="skill-tag">Copywriting</span><span class="skill-tag">GA4</span><span class="skill-tag">Zapier</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 6. ScribeMD -->
+        <div class="case">
+          <a href="http://scribemd.ai/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F687fd348f9fe6776ccf52d23_scribe%20-%201080WebShareName-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F687fd348f9fe6776ccf52d23_scribe%20-%201080WebShareName-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">ScribeMD</span><span class="case-tag">Automate your medical notes</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">ScribeMD is a voice-to-document application for scribes and medical professionals to notate and monitor spoken words between patient and doctor. I did the branding, the site, coding snippets for animations, and UI/UX direction.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter really maximized our potential. If you saw the before and after you wouldn't believe it was the same application. He painted the picture of a human connection between technology and medical care very, very well.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">True 0-to-1 build from hand-drawn concepts. Established the visual foundation — color system, initial app screens, and full marketing website from scratch.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Copywriting</span><span class="skill-tag">React</span><span class="skill-tag">GA4</span><span class="skill-tag">Graphic Design</span><span class="skill-tag">Branding</span><span class="skill-tag">Webflow</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 7. Plants Planted -->
+        <div class="case">
+          <a href="https://plantsplanted.com/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6774daf0b5a5815bb809b5ff_Pp-transcode-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6774daf0b5a5815bb809b5ff_Pp-transcode-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Plants Planted</span><span class="case-tag">Greenery for modern homes</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Plants Planted is a cool little e-shop from NYC. Dennis grows microgreens, makes custom plant holders, builds grow shelves, and curates an earthy energy that brings his love for plants into every aspect of your home.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter has a really thorough experience. Branding, Design, Development, Copywriting, Testing, Payment gateway, Third-party App integration, Product image editing, SEO, Mobile responsiveness, Domain connection. He literally did it all. $7,500 well spent.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Built V1, ran real customer tests for a month, then rebuilt V2. 30–40% increase in daily sales over the following weeks as brand visibility improved.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Copywriting</span><span class="skill-tag">Javascript</span><span class="skill-tag">Liquid</span><span class="skill-tag">Branding</span><span class="skill-tag">Shopify</span><span class="skill-tag">CRO</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 8. Shopsuccessors -->
+        <div class="case">
+          <a href="https://shopsuccessors.webflow.io/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F682656f4b348c9b4e04f1446_ss-transcode-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F682656f4b348c9b4e04f1446_ss-transcode-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Shopsuccessors</span><span class="case-tag">Unlimited Shopify tasks, accomplished</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Shopsuccessors is an all-in-one Shopify agency — your e-commerce manager, designer, developer, customer success lead, product manager, and more.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Working with Carter was a great first step in the right direction. This isn't our first project and not our last — we actually used to be interns together, so I knew who I could partner up with.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Over 10,000 visitors in their first week of launch.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Product Development</span><span class="skill-tag">Webflow</span><span class="skill-tag">Copywriting</span><span class="skill-tag">GA4</span><span class="skill-tag">Stripe</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 9. Pitswap -->
+        <div class="case">
+          <a href="https://www.usepitswap.com/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6920947709285f76a486ac38_Pitswapvideo_poster.0000000.jpg"></video>
+          </a>
+          <div class="case-head"><span class="case-title">Pitswap</span><span class="case-tag">Find the perfect parts, right now</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Pitswap is a peer-to-peer marketplace in the vehicle space, with genuine goals of decreasing transaction fees from industry standards and fostering community.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter has provided the best and most professional service I have ever had with any designer/developer. He was able to make my idea come to life, better than I could've ever imagined.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">0-to-1 build. Upon launch multiple users were signing up daily — both buying and selling — with pro enrollments every other day or so.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">PayPal Marketplace</span><span class="skill-tag">Mixpanel</span><span class="skill-tag">GA4</span><span class="skill-tag">Figma</span><span class="skill-tag">React</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 10. Telehealth Nurse Network -->
+        <div class="case">
+          <a href="https://www.telehealthnursenetwork.com/" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F672fcb77421c8024ff9cdb99_TNNF-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F672fcb77421c8024ff9cdb99_TNNF-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Telehealth Nurse Network</span><span class="case-tag">Telehealth nursing jobs</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Telehealth Nurse Network is more than a job board — it's a career-changing company helping nurses find remote roles to maximize support to patients.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Right away. Instantly. I saw an abundance of traffic, massive positive feedback, and a significant amount of first-time visitors becoming paid users. Watching him put those ideas onto the web, it was like watching magic happen.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Decreased load speed by 90%. Bounce rates down 20%, average user spending 37 minutes on site. Active members: 108 → 1,480 and counting.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Copywriting</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Google Business + GA4</span><span class="skill-tag">Webflow</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 11. Wellness Partners -->
+        <div class="case">
+          <a href="https://wellnesspartnerspllc.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6694aa23cf165d4468d66a4a_wellness-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6694aa23cf165d4468d66a4a_wellness-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Wellness Partners</span><span class="case-tag">Discover your best self</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Wellness Partners PLLC is a health collective in Boise, ID offering personalized physical training, massage, mental health therapy, and yoga.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter has been great with the build out of our site and the small continuous updates since. I just connected with him, paid his price, and he took creative control and initiative. He took care of things I didn't even know were things to consider.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">~50% improvement in load speed. 68% increase in lead form submissions driven by reduced friction and more intentional user flows.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Javascript</span><span class="skill-tag">GSAP</span><span class="skill-tag">Branding</span><span class="skill-tag">Custom Booking</span><span class="skill-tag">Webflow</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 12. Glowsend -->
+        <div class="case">
+          <a href="https://glowsend.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6820cac361e4643aadf5a773_Glow-transcode-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F6820cac361e4643aadf5a773_Glow-transcode-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Glowsend</span><span class="case-tag">Delivering excellence</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Glowsend is a powerful WhatsApp hub for operations — streamlining invoicing, payments, and tracking all within a single chat so entrepreneurs can close deals and get paid better.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">He brought a perspective-changing experience and set the bar high for our future contracts. I felt like I hired a designer/developer and a mentor for marketing and scaling all in one. 10/10, would work with again.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Onboarded upon launch to revamp the full experience via UX, SEO, and copywriting. Cleaned up long titles and optimized parts that weren't standing out to users.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Copywriting</span><span class="skill-tag">Product Development</span><span class="skill-tag">Webflow</span><span class="skill-tag">Figma</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 13. Hotmetro -->
+        <div class="case">
+          <a href="https://hotmetro.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F683628ad2ead68ffec6de6a1_Hotmetro-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F683628ad2ead68ffec6de6a1_Hotmetro-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Hotmetro</span><span class="case-tag">Name your price real estate</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Hotmetro is a new kind of real estate agency. Buyers name their budget, and Hotmetro finds and negotiates homes that match — giving buyers more control and cash back in their pockets.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Carter really brought home my whole project. I didn't see exact copies of sites I liked but more "mine in my own way" — and I felt like that's something I wouldn't have gotten anywhere else.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">0-to-1 build. Built a real-time customized calculator that funneled into a lead form, with a background animation to match the brand's bold vision.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Copywriting</span><span class="skill-tag">GA4</span><span class="skill-tag">Javascript</span><span class="skill-tag">Branding</span><span class="skill-tag">Webflow</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 14. Lome -->
+        <div class="case">
+          <a href="https://withlome.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F694c38aa326ac91e0dbd6413_lome%20-%20Large%20540p_poster.0000000.jpg"></video>
+          </a>
+          <div class="case-head"><span class="case-title">Lome</span><span class="case-tag">Local community based bulletin</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Lome is a community-focused software platform helping people organize events, volunteers, and group activities through simple, ad-free sign-up forms — built for schools, nonprofits, churches, teams, and families.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Working with Carter felt easy and efficient from the start. He analyzed aspects we overlooked, fixed flaws in our pricing system via code, and rewrote copy. He understood the product immediately and translated it into a landing experience that actually reflects how simple Lome is.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Two parallel strategies — core website and conversion. Launched a dedicated SEO-driven splash page. Resolved a membership billing issue creating friction during signup.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Webflow</span><span class="skill-tag">Zapier</span><span class="skill-tag">Copywriting</span><span class="skill-tag">UX</span><span class="skill-tag">Strategy</span></div></div></div>
+          </div>
+        </div>
+
+        <!-- 15. Reko -->
+        <div class="case">
+          <a href="https://rekonow.com" target="_blank" class="case-vid">
+            <video autoplay loop muted playsinline poster="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F669c4174a447c7cc13771048_Reko-poster-00001.jpg">
+              <source src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631%2F669c4174a447c7cc13771048_Reko-transcode.mp4" type="video/mp4"/>
+            </video>
+          </a>
+          <div class="case-head"><span class="case-title">Reko</span><span class="case-tag">Local farmers e-commerce app</span></div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Client</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Reko brings local communities together by connecting farmers with customers as a digital farmers market — empowering homestead-style communities.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Feedback</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Would give 4/5 stars. I had asked him to design our landing page, which he did, but I was under the assumption I was also getting the code, hosting, and domain. There was a miscommunication around scope.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Results</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><p class="acc-text">Improved an outdated WordPress site design via Figma — replaced dated 2007-era visuals with a fresh aesthetic aimed at conveying local hometown connection.</p></div></div>
+          </div>
+          <div class="acc-item">
+            <div class="acc-btn" onclick="tog(this)"><span class="acc-btn-label">Solution</span><span class="acc-icon"></span></div>
+            <div class="acc-body"><div class="acc-inner"><div class="skills"><span class="skill-tag">Figma</span><span class="skill-tag">Copywriting</span></div></div></div>
+          </div>
+        </div>
+
+      </div><!-- /cases -->
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <span class="section-label">About</span>
+      <div class="about-grid">
+        <div>
+          <h1 class="about-heading">Hey, thank you for stopping by,</h1>
+          <p class="about-body">
+            I can already tell we're going to do great things together. I'm driven by what's possible, and in my perspective, anything is.<br/><br/>
+            A few highlights:<br/>
+            · Improved conversion rate from 1.2% to 4.6% on a store with 10K visitors a day.<br/>
+            · Turned 2% repeat buyers into 38% by building automated marketing &amp; rewards systems.<br/>
+            · Scaled $140M ARR to $260M (86% YoY growth) by owning Ads, SEO, and CRO campaigns.<br/><br/>
+            Combining digital marketing, technical development, and lifecycle systems to build scalable solutions.<br/><br/>
+            My journey: Self-taught designer/developer → Adobe intern → Apple sales expert → four years in marketing &amp; e-commerce management roles, and now freelance.
+          </p>
+        </div>
+        <div class="about-photo">
+          <img src="https://cdn.prod.website-files.com/63c58f51a7ae4ec9347ea631/685839353c06b6092957870a_profile.png" alt="Carter Blaine" class="about-img"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLES -->
+    <section id="articles" class="section">
+      <span class="section-label">Articles</span>
+      <div class="articles-grid">
+        <div class="art-sidebar">
+          <span class="art-group-title">Every dollar spent on UX, $100 is returned</span>
+          <a href="#a-intro" class="art-sublink is-active">Introduction</a>
+          <a href="#a-valuable" class="art-sublink">Why it's valuable</a>
+          <a href="#a-seen" class="art-sublink">What I've seen work</a>
+          <a href="#a-publish" class="art-sublink">Publishing without resistance</a>
+          <div class="art-sep"></div>
+          <span class="art-group-title">Successfully structuring systems</span>
+          <a href="#a-building" class="art-sublink">Building</a>
+          <a href="#a-automation" class="art-sublink">Automation</a>
+          <a href="#a-stabilization" class="art-sublink">Stabilization</a>
+          <div class="art-sep"></div>
+          <span class="art-group-title">How I took a store from 2.7% to 6.8%</span>
+          <a href="#a-clicks" class="art-sublink">Deleting unnecessary clicks</a>
+          <a href="#a-messaging" class="art-sublink">Ultra-clear messaging</a>
+          <a href="#a-testing" class="art-sublink">Testing everything</a>
+          <a href="#a-success" class="art-sublink">Increasing customer success</a>
+          <div class="art-sep"></div>
+          <span class="art-group-title">Designing to convert</span>
+          <a href="#a-research" class="art-sublink">Research what's winning</a>
+          <a href="#a-friction" class="art-sublink">Reducing friction</a>
+          <a href="#a-easy" class="art-sublink">Make it an easy sell</a>
+        </div>
+
+        <div class="art-scroll" id="artScroll">
+          <div id="a-intro" class="art-block">
+            <h1 class="art-h1">Every dollar spent on UX, $100 is returned</h1>
+            <h2 class="art-h2">Introduction</h2>
+            <p class="art-p">I know it sounds insane. "Every dollar invested in UX returns $100." It came from a <a href="https://www.forrester.com/report/The-Six-Steps-For-Justifying-Better-UX/RES117708" target="_blank">Forrester article</a>, and I wanted to provide a hands-on take on why UX contributes the most in a business — after years of working with clients, managing Shopify stores exceeding $100M in sales, fixing broken flows, and watching what good UX actually does.</p>
+          </div>
+          <div id="a-valuable" class="art-block">
+            <h2 class="art-h2">Why it's valuable</h2>
+            <p class="art-p">I've seen people dump thousands into ads, social, growth operators — and then wonder why nothing works. The problem is almost always the same: the destination. You can have great copy, decent brand, solid traffic. But when a user tries to buy something and the experience breaks, everything upstream collapses.</p>
+            <p class="art-p">Someone spent $4K on Meta and Google ads and couldn't convert a single visitor. The site was barely usable — 2010-era visuals, broken mobile, overlapping popups. With strong UX, 2–8% conversion isn't unrealistic.</p>
+          </div>
+          <div id="a-seen" class="art-block">
+            <h2 class="art-h2">What I've actually seen work</h2>
+            <p class="art-p">Most people think UX is about design trends. The real missing link is connection — understanding what your user is trying to do and removing every barrier between them and that goal. Your message needs to be so clear there's zero ambiguity. No guessing, no hunting for the CTA.</p>
+          </div>
+          <div id="a-publish" class="art-block">
+            <h2 class="art-h2">Publishing without resistance</h2>
+            <p class="art-p">How do you push updates without creating friction? Do it minimally. Test before and after. Familiarity matters more than novelty. That's why full redesigns rarely work — smaller rollouts give users time to adjust and give teams time to correct what isn't landing.</p>
+          </div>
+          <div class="art-rule"></div>
+          <div id="a-building" class="art-block">
+            <h1 class="art-h1">Successfully structuring systems</h1>
+            <h2 class="art-h2">Building</h2>
+            <p class="art-p">Pull quality candidates by conversation. Be on the same page in communication — harder than it sounds internationally. Set clear expectations and talk about pay without emotion. Get 10 A+ people around each other and watch them flow. Passive people create passive motives that spread.</p>
+          </div>
+          <div id="a-automation" class="art-block">
+            <h2 class="art-h2">Automation</h2>
+            <p class="art-p">Automation isn't about doing more — it's about removing friction from the work that repeats every week. If something requires explanation more than once, it's a candidate for automation. The most effective automation replaces memory, not people. Follow-ups, status changes, and data movement should never rely on someone remembering.</p>
+          </div>
+          <div id="a-stabilization" class="art-block">
+            <h2 class="art-h2">Stabilization</h2>
+            <p class="art-p">Stabilization is the point where automation actually becomes useful — leads don't get lost, follow-ups happen when they should, and visibility replaces guesswork. Once that foundation is in place, optimization is what makes scale realistic.</p>
+          </div>
+          <div class="art-rule"></div>
+          <div id="a-clicks" class="art-block">
+            <h1 class="art-h1">How I took a 2.7% converting storefront to 6.8%</h1>
+            <h2 class="art-h2">Deleting unnecessary clicks</h2>
+            <p class="art-p">The biggest flaw was how many unnecessary clicks there were to checkout — a raffle giveaway popup, a marketing enrollment banner, a rewards window on the product page. I deleted them all. Got the clicks from land to checkout from 13 down to 7. I relocated email/SMS enrollment to a pre-checked box at checkout: "Yes, enroll me in messages that save me money."</p>
+          </div>
+          <div id="a-messaging" class="art-block">
+            <h2 class="art-h2">Ultra-clear messaging</h2>
+            <p class="art-p">The copy read like everything was 90% off — every exclamation point, all caps. Products and upsells gave off the feel that the product was suspicious. I didn't get all the changes I wanted, but the next day after implementing changes, we saw greater sales right away.</p>
+          </div>
+          <div id="a-testing" class="art-block">
+            <h2 class="art-h2">Testing and tracking, everything</h2>
+            <p class="art-p">I built a table to track everything — baseline metrics before, post-test results after, notes on what moved the needle. Conversion rate, add-to-cart, checkout completion, bounce, time on page. That table became the source of truth. No ego, no attachment — just data. That's how the store moved from 2.7% to 6.8%.</p>
+          </div>
+          <div id="a-success" class="art-block">
+            <h2 class="art-h2">Increasing customer success</h2>
+            <p class="art-p">I changed their order confirmation emails to read more than just a receipt, built out a rewards system, and pitched the same deals with better color coordination and more excitement in the subject heading. People were checking out and then within days ordering something else — just saying thank you in a better way goes a long way.</p>
+          </div>
+          <div class="art-rule"></div>
+          <div id="a-research" class="art-block">
+            <h1 class="art-h1">Designing to convert</h1>
+            <h2 class="art-h2">Research what's already winning</h2>
+            <p class="art-p">Before you design anything, remove ego. Open ten competitors. Go through their checkout. Count clicks. Notice friction. Screenshot moments where you feel relief. That relief is conversion. Winning design usually feels boring until you realize how much money it makes.</p>
+          </div>
+          <div id="a-friction" class="art-block">
+            <h2 class="art-h2">Reducing friction through systems</h2>
+            <p class="art-p">Designing to convert is about respect — for attention, for time, for intent. When users feel guided instead of sold to, conversion happens naturally. People don't want to think harder than they have to. The companies that win aren't louder, they're clearer. Design that converts doesn't feel aggressive. It feels inevitable.</p>
+          </div>
+          <div id="a-easy" class="art-block">
+            <h2 class="art-h2">Make it an easy sell</h2>
+            <p class="art-p">Simplify subscriptions to monthly and yearly only. Reduce to the fewest checkout steps possible. Make every action obvious. Track what happens after every change. I had set up "Auto enable" on one client's Shopify checkout — when the customer went to cart, their name was already selected. Such a small switch, but it has an "Oh it's already ready for me" feel. Those moments compound.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</div><!-- /layout -->
+
+<script>
+// ===== ACCORDION =====
+function tog(btn) {
+  const item = btn.closest('.acc-item');
+  const open = item.classList.contains('is-open');
+  // close all siblings (walk up to find case box, close all inside)
+  const box = item.closest('.case');
+  box.querySelectorAll('.acc-item.is-open').forEach(el => el.classList.remove('is-open'));
+  if (!open) item.classList.add('is-open');
+}
+
+// ===== SCROLL PROGRESS + NAV ACTIVE =====
+const ct = document.getElementById('content');
+ct.addEventListener('scroll', () => {
+  const pct = ct.scrollTop / (ct.scrollHeight - ct.clientHeight);
+  document.getElementById('pBar').style.width = (pct * 100) + '%';
+
+  const ids = ['intro','casestudies','about','articles'];
+  let cur = 'intro';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop - ct.scrollTop <= 80) cur = id;
+  });
+  document.querySelectorAll('.nav-link-row a[data-sec]').forEach(a => {
+    a.classList.toggle('is-active', a.dataset.sec === cur);
+  });
+}, { passive: true });
+
+// ===== CASE REVEAL =====
+document.addEventListener('DOMContentLoaded', () => {
+  let n = 0;
+  const obs = new IntersectionObserver(entries => {
+    entries.filter(e => e.isIntersecting)
+      .sort((a,b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top)
+      .forEach(e => {
+        e.target.style.setProperty('--d', Math.min(n++ * 80, 360) + 'ms');
+        setTimeout(() => e.target.classList.add('show'), parseFloat(e.target.style.getPropertyValue('--d')));
+        obs.unobserve(e.target);
+      });
+  }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.case').forEach(el => obs.observe(el));
+
+  // ===== ARTICLE SIDEBAR SYNC =====
+  const as = document.getElementById('artScroll');
+  const subs = Array.from(document.querySelectorAll('.art-sublink'));
+
+  subs.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target || !as) return;
+      subs.forEach(s => s.classList.remove('is-active'));
+      link.classList.add('is-active');
+      const cr = as.getBoundingClientRect();
+      const tr = target.getBoundingClientRect();
+      as.scrollTo({ top: as.scrollTop + (tr.top - cr.top) - 6, behavior: 'smooth' });
+    });
+  });
+
+  if (as) {
+    as.addEventListener('scroll', () => {
+      const cr = as.getBoundingClientRect();
+      const mark = cr.top + 32;
+      let cur = null;
+      subs.forEach(link => {
+        const id = link.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= mark) cur = link;
+      });
+      if (cur) { subs.forEach(s => s.classList.remove('is-active')); cur.classList.add('is-active'); }
+    }, { passive: true });
+  }
+
+  // ===== SMOOTH SCROLL FROM NAV =====
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      if (a.classList.contains('art-sublink')) return;
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target && ct) {
+        e.preventDefault();
+        ct.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
