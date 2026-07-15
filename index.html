@@ -130,12 +130,20 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-sub {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px 6px;
   font-size: 0.92rem;
   font-weight: 400;
   color: rgba(24,24,24,0.5);
   line-height: 1.7;
   max-width: 480px;
   margin: 0 auto;
+}
+.hero-sub .hs-line {
+  white-space: nowrap;
 }
 .hero-sub a {
   color: #181818;
@@ -413,10 +421,10 @@ a { color: inherit; text-decoration: none; }
     <div class="hero-inner">
       <h1>Designing experiences<br/>curated to convert, scale, and retain</h1>
       <p class="hero-sub">
-        See <a href="#casestudies">what people say about me</a>,
-        <a href="#about">get to know me</a>, or
-        <a href="mailto:Carterblaine@icloud.com?subject=Hey%20Carter%20">work with me</a>
-      </p>
+      <span class="hs-line">See <a href="#casestudies">what people say about me</a>,</span>
+      <span class="hs-line"><a href="#about">get to know me</a>, or</span>
+     <span class="hs-line"><a href="mailto:Carterblaine@icloud.com?subject=Hey%20Carter%20">work with me</a></span>
+</p>
     </div>
   </section>
 
